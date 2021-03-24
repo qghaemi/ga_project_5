@@ -5,6 +5,7 @@
 
 
 # Project 5:  Developing AQI prediction feature for Dyson 
+![](https://github.com/qghaemi/ga_project_5/blob/main/images/5a1ac806f65d84088faf136b.png)
 
 Authors: Artem Lukinov, Mackenzie Dowling, Q Ghaemi
 
