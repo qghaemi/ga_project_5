@@ -189,17 +189,30 @@ We chose to explore AR models as it will calculate the regression of past AQI sc
 After reviewing quarterly PACF a seasonal cycled was observed which confirmed AR to be a significant parameter for our model. Based on where the lag occurred, the baseline value for AR should be AR(1).
 
 
+![ARIMA predictions](https://github.com/qghaemi/ga_project_5/blob/main/images/ARIMA_preds.png)
+
 ARIMA scores:
 - 30113.33 AIC Score
 - RMSE 7-day: 19.15
-- Full RMSE: 37.49ARIMA
+- Full RMSE: 37.49
 
-a baseline ARIMA model which we compared to the AR model that we built. We wanted to build baseline models to determine which would return our lowest AIC score before deciding to adjust the parameters of a specific model.
+A baseline ARIMA model which we compared to the AR model that we built. We wanted to build baseline models to determine which would return our lowest AIC score before deciding to adjust the parameters of a specific model.
 
 We chose to build an ARIMA model because our forecasting window was very small and this is the strength of an ARIMA model which led us to believe this model could be the one we would adjust.
 
-
-
 ## [](https://github.com/qghaemi/ga_project_5#Conclusions-and-Recommendations)Conclusions and Recommendations
 
+|Model  | AIC | RMSE 7-day| RMSE Full|
+|--|--|--|--|
+|AR| 6.28 |16.70|36.42|
+|ARIMA|30113.33|19.15|37.49|
+|SARIMA|33155.47|17.09|31.90|
 
+Although AR model's AIC score is the lowest by a large margin, we are disregarding the AIC scores in favor of RMSE. Since the task is to forecast 7 days out, we have evaluated all of the models by their respective 7-day RMSE and Full RMSE scores.
+
+AR scored the best in 7-day RMSE score. However, SARIMA model's score difference was negligible and its Full RMSE score was significantly lower.
+
+Recommendations:
+1. Tune SARIMA model for best RMSE by using Grid Search on a more powerful CPU and GPU. 
+2. Build out individual models for each county in California.
+3. Build out individual models for each county in the country.
