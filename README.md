@@ -21,7 +21,7 @@ Authors: Artem Lukinov, Mackenzie Dowling, Q Ghaemi
 -  [The Modeling Process](https://github.com/qghaemi/ga_project_5#The-Modeling-Process)
 -   [Conclusions and Recommendations](https://github.com/qghaemi/ga_project_5#Conclusions-and-Recommendations)
 
-## [](https://github.com/qghaemi/ga_project_5#File-structure)File Structure
+## [](https://github.com/qghaemi/ga_project_5#File structure)File Structure
 
 **datasets** folder - all data points and a cleaned, consolidated data file
 **images** folder - all images used in the project and presentation
@@ -87,14 +87,7 @@ After the final dataframe was concatenated from all files, a thorough review of 
 
 The top 4 counties are connected by borders and are near Los Angeles that has one of the highest polluted air in the country. The number 5 spot belongs to Tulare county that has Sequoia National Forest which was subject to forest fires.
 
-![ACF, quarter level](https://github.com/qghaemi/ga_project_5/blob/main/images/ACF_quarterly.png)
-There is a seasonal cycle at every 4 lags (quarters) for MA(1). The big spike at lag1 for MA(1), if it was MA(2) we would see two spikes lag1 and lag2, repeated in a 4 quarter cycle.
-
-
-![PACF, quarterly level](https://github.com/qghaemi/ga_project_5/blob/main/images/PACF_quarterly.png)
-Very similar season pattern, except this tells AR also looks to be AR(1). We are seeing one big spike, then starts to converse towards zero (with a quarterly cycle).
-
-Null Hypothesis testing. Null Hypothesis is that our data is non-stational. 
+Null Hypothesis testing. Null Hypothesis is that our data is non-stationary. 
 
 |       County    |         T-stat     |                 P-Value             |
 |-----------------|------------------------|---------------------------|
@@ -152,8 +145,60 @@ Null Hypothesis testing. Null Hypothesis is that our data is non-stational.
 | Trinity         | (-4.681968991684861,)  | (9.096687320851715e-05,)  |
 | Alpine          | (-3.365505086844199,)  | (0.012192536290753503,)   |
 
+Based on p-values being significantly low, we can safely reject the Null hypothesis and determine that our data is stationary. This gives validity to use a model with autoregressive forecasting to predict the AQI score.
+
+![ACF, quarter level](https://github.com/qghaemi/ga_project_5/blob/main/images/ACF_quarterly.png)
+
+There is a seasonal cycle at every 4 lags (quarters) for MA(1). The big spike at lag1 for MA(1), if it was MA(2) we would see two spikes lag1 and lag2, repeated in a 4 quarter cycle. This confirms that we need to incorporate moving average into our model.
+
+
+![PACF, quarterly level](https://github.com/qghaemi/ga_project_5/blob/main/images/PACF_quarterly.png)
+
+Very similar seasonal pattern, except this tells AR also looks to be AR(1). We are seeing one big spike, then starts to converse towards zero (with a quarterly cycle).
+
+These steps confirm that we also need to add a seasonality component into our model.
 
 ## [](https://github.com/qghaemi/ga_project_5#The-Modeling-Process)The Modeling Process
+
+Based on the confirmations found in EDA, we believed our forecasting model would require seasonality (SARIMA), moving average (ARIMA), and auto-regression (AR). Each of the models selected have at least one of these features to explore forecasting with. We chose to use root mean squared error (RMSE) across all models in the same time window in order to determine the strongest model.
+
+The time period we chose was all forecasts from the start of the data until the end of 2018. Then our testing data was the full year 2019. We chose not to forecast for the full-year 2020 as we did not have data for the full year and saw that the COVID lockdowns played an impact on the AQI scores for the year thus potentially introducing outliers into the model just in the testing data.
+
+We chose to use RMSE as the measurement for each model as we found AIC scores to be less reliable across different model types. As we were most focused on the predicted values (forecast) measuring model strength by the RMSE of the predictions seemed more suited for this project. We developed a RMSE that would measure only over a set number of prediction, allowing RMSE for the first seven predictions as well as RMSE for all predicted values.
+
+![SARIMA predictions](https://github.com/qghaemi/ga_project_5/blob/main/images/sarima_fc.png)
+
+SARIMA scores:
+- 33155.47 AIC Score
+- RMSE 7-day: 17.09
+- Full RMSE: 31.90
+
+The red line in the graph represents the expected future data based on the forecasting model we built. The red line represents the average forecasted value for each day, and we would not be surprised to see the actual numbers track to this line for the most part. But there is no guarantee of this!
+
+The gray area above and below the red line represents the 95 percent confidence interval and as with virtually all forecasting models, as the predictions go further into the future, the less confidence we have in our values. In this case, we are 95 percent confident that the actual AQI will fall inside this range. But, there is a chance the actuals could fall completely outside this range also. The larger the future time period for which we want to predict, the larger this confidence range will be (that is, the less precise our forecast is).
+
+![AR predictions](https://github.com/qghaemi/ga_project_5/blob/main/images/LA_preds.png)
+
+AR Scores:
+- 6.28 AIC Score
+- RMSE 7-day: 16.70
+- Full RMSE: 36.42
+
+We chose to explore AR models as it will calculate the regression of past AQI scores and calculate the predicted AQI score. We want to be considerate of previous AQI scores.
+
+After reviewing quarterly PACF a seasonal cycled was observed which confirmed AR to be a significant parameter for our model. Based on where the lag occurred, the baseline value for AR should be AR(1).
+
+
+ARIMA scores:
+- 30113.33 AIC Score
+- RMSE 7-day: 19.15
+- Full RMSE: 37.49ARIMA
+
+a baseline ARIMA model which we compared to the AR model that we built. We wanted to build baseline models to determine which would return our lowest AIC score before deciding to adjust the parameters of a specific model.
+
+We chose to build an ARIMA model because our forecasting window was very small and this is the strength of an ARIMA model which led us to believe this model could be the one we would adjust.
+
+
 
 ## [](https://github.com/qghaemi/ga_project_5#Conclusions-and-Recommendations)Conclusions and Recommendations
 
