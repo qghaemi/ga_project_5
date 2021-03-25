@@ -21,7 +21,7 @@ Authors: Artem Lukinov, Mackenzie Dowling, Q Ghaemi
 -  [The Modeling Process](https://github.com/qghaemi/ga_project_5#The-Modeling-Process)
 -   [Conclusions and Recommendations](https://github.com/qghaemi/ga_project_5#Conclusions-and-Recommendations)
 
-## [](https://github.com/qghaemi/ga_project_5#File structure)File Structure
+## [](https://github.com/qghaemi/ga_project_5#File-structure)File Structure
 
 **datasets** folder - all data points and a cleaned, consolidated data file
 **images** folder - all images used in the project and presentation
