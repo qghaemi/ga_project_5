@@ -23,13 +23,13 @@ Authors: Artem Lukinov, Mackenzie Dowling, Q Ghaemi
 
 ## [](https://github.com/qghaemi/ga_project_5#File-structure)File Structure
 
-**datasets** folder - all data points and a cleaned, consolidated data file
-**images** folder - all images used in the project and presentation
-**1_data_cleaning.ipynb** - data cleaning notebook
-**2_eda.ipynb** - Exploratory Data Analysis
-**3_sarima_model.ipynb** - SARIMA modeling process and interpretations
-**4_ar_models.ipynb** - AR modeling process and interpretations
-**5_arima_models.ipynb** - ARIMA modeling process and interpretations
+- **datasets** folder - all data points and a cleaned, consolidated data file
+- **images** folder - all images used in the project and presentation
+- **1_data_cleaning.ipynb** - data cleaning notebook
+- **2_eda.ipynb** - Exploratory Data Analysis
+- **3_sarima_model.ipynb** - SARIMA modeling process and interpretations
+- **4_ar_models.ipynb** - AR modeling process and interpretations
+- **5_arima_models.ipynb** - ARIMA modeling process and interpretations
 
 Package requirements: 
 - pandas
